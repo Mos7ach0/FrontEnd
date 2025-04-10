@@ -1,0 +1,11 @@
+@import "tailwindcss";
+
+.p-togglebutton .p-button{
+    background: #1C1D1F;
+}
+
+.p-togglebutton.p-highlight .p-button{
+    background: #282B30;
+    background-color: #282B30;
+    color: #fff;
+}
