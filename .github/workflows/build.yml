@@ -1,0 +1,46 @@
+name: Build and Test React App
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Paso 1: Checkout del código
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Paso 2: Configurar Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16' # O la versión de Node.js que uses
+
+      # Paso 3: Instalar dependencias
+      - name: Install dependencies
+        run: npm install
+
+      # Paso 4: Ejecutar Lint
+      - name: Run lint
+        run: npm run lint
+
+      # Paso 5: Ejecutar pruebas
+      - name: Run tests
+        run: npm test -- --ci --runInBand --coverage
+
+      # Paso 6: Build de la aplicación
+      - name: Build the app
+        run: npm run build
+
+        name: Deploy on github pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+            github_token: ${{ secrets.GITHUB_TOKEN }}
+            publish_dir: ./dist
